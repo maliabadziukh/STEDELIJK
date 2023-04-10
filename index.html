@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>STEDELIJK</title>
+    <!--buttons/links lead to a change in URL that would correspond with a switch to a different page of the website-->
+    <!--PLEASE NOTE!!! I know that generally it is best to link a separate document with css as a stylesheet and another document with javascript in it so all pages of the website can reuse the same attributes, but for some reason it doesn't work for me... i tried to solve the issue in many different ways but nothing worked so i put the css and javascript in their own tags in this document-->
+    <style>
+      /*all css styling is in the <style> tag*/
+      h1 {
+        font-family: "Arial";
+        font-weight: normal;
+        font-size: 40pt;
+        color: black;
+        text-decoration: none;
+      }
+      h2 {
+        font-family: "Arial";
+        font-weight: normal;
+        font-size: 25pt;
+        color: black;
+        text-decoration: none;
+      }
+      p {
+        font-family: "Arial";
+        font-weight: normal;
+        font-size: 18pt;
+        color: black;
+        text-decoration: none;
+      }
+      .button {
+        font-family: Arial;
+        text-decoration: none;
+        font-size: 18pt;
+        color: black;
+        text-align: center;
+        background-color: white;
+        border: 1px solid black;
+        padding: 5pt 12pt;
+        transition-duration: 0.25s;
+      }
+      .button:hover {
+        background-color: #aaaaaa;
+        cursor: pointer;
+      }
+      a {
+        color: black;
+        text-decoration: none;
+      }
+      /* topbar navigation*/
+      nav {
+        width: 100%;
+        background-color: black;
+        overflow: hidden;
+        z-index: 10;
+        position: fixed;
+        top: 0;
+        border: 2px solid rgb(46, 46, 46);
+      }
+      nav a {
+        float: right;
+        color: #ffffff;
+        text-align: right;
+        padding: 22pt 30pt;
+        text-decoration: none;
+        font-family: "arial";
+        font-size: 15pt;
+      }
+      nav img {
+        float: left;
+        width: 60px;
+        height: 60px;
+        margin-top: 10pt;
+        margin-bottom: 10pt;
+        margin-left: 10pt;
+      }
+      nav a.active {
+        text-decoration: underline;
+      }
+      nav input[type="text"] {
+        float: right;
+        padding: 4pt;
+        background-color: #4c4c4c;
+        border-color: #ffffff;
+        border-width: 1pt;
+        margin-top: 22pt;
+        margin-left: 30pt;
+        margin-right: 30pt;
+        font-family: Arial;
+        font-size: 10pt;
+        color: #ffffff;
+      }
+      .tickets1 {
+        float: right;
+        margin-top: 18pt;
+        margin-left: 30pt;
+        margin-right: 50pt;
+        display: block;
+      }
+
+      /*image gallery*/
+      .view-collection {
+        font-size: 40pt;
+        border: 2px solid black;
+        padding: 15pt 30pt;
+        z-index: 9;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .carousel {
+        position: relative;
+        height: 500pt;
+        width: 70%;
+        margin: auto;
+        margin-top: 150pt;
+      }
+      .carousel_image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .carousel_container {
+        background: black;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+      }
+      .carousel_track {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        position: relative;
+        height: 100%;
+        transition: transform 300ms ease-in;
+      }
+      .carousel_slide {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+      }
+      .carousel_button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+      }
+      .carousel_button--left {
+        left: -50pt;
+      }
+      .carousel_button--right {
+        right: -50pt;
+      }
+      .carousel_button img {
+        width: 25pt;
+      }
+      .carousel_nav {
+        display: flex;
+        justify-content: center;
+        padding: 10pt 0;
+      }
+      .carousel_circle {
+        border-radius: 50%;
+        border-color: #707070;
+        background: white;
+        height: 15px;
+        margin: 0 12pt;
+        cursor: pointer;
+      }
+      .carousel_circle.current-slide {
+        background: #707070;
+      }
+      .is-hidden {
+        display: none;
+      }
+
+      /*black banner section*/
+      .banner {
+        margin: auto;
+        margin-top: 125pt;
+        margin-bottom: 125pt;
+        width: 90%;
+        background-color: black;
+        text-align: left;
+        padding: 90px;
+        overflow: hidden;
+      }
+      .white {
+        color: white;
+      }
+      .banner img {
+        margin-left: 150pt;
+        margin-right: 50pt;
+        margin-top: 30pt;
+        float: left;
+        width: 400pt;
+        height: 400pt;
+        display: block;
+      }
+      .banner h1 {
+        margin-right: 20pt;
+      }
+      .banner p {
+        display: flex;
+        margin-right: 150pt;
+      }
+      .button2 {
+        margin-top: 10pt;
+        margin-bottom: 10pt;
+        display: inline-block;
+      }
+      /*section with small content boxes containing news with images*/
+      .content-box {
+        width: 70%;
+        border: 2px solid black;
+        margin: auto;
+        margin-top: 90pt;
+        position: relative;
+      }
+      .content-box:hover {
+        background-color: rgb(236, 236, 236);
+        cursor: pointer;
+      }
+      .box-text {
+        margin-left: 20pt;
+        margin-right: 20pt;
+        width: 75%;
+      }
+      .box-image {
+        display: block;
+        position: absolute;
+        right: 0pt;
+        top: 0pt;
+        width: 20%;
+        height: 100%;
+        overflow: hidden;
+        border-left: 2px solid black;
+      }
+      .box-image img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+      /*video carousel*/
+      .outer_video-container {
+        width: 100%;
+        height: 500pt;
+        margin-top: 125pt;
+        position: relative;
+        overflow: hidden;
+      }
+      .video-carousel {
+        position: relative;
+        height: 400pt;
+        width: 60%;
+        margin: auto;
+      }
+      .carousel_thumbnail {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .video-carousel_container {
+        background: black;
+        height: 100%;
+        position: relative;
+      }
+      .video-carousel_track {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        position: relative;
+        height: 100%;
+        transition: transform 0.5s ease-in;
+      }
+      .carousel_video {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+      }
+      .video-carousel_button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+      }
+      .video-carousel_button--left {
+        left: -75pt;
+      }
+      .video-carousel_button--right {
+        right: -75pt;
+      }
+      .video-carousel_button img {
+        width: 25pt;
+      }
+      .video-carousel_nav {
+        display: flex;
+        justify-content: center;
+        padding: 10pt 0;
+      }
+      .video-carousel_circle {
+        border-radius: 50%;
+        border-color: #707070;
+        background: white;
+        height: 15px;
+        margin: 0 12pt;
+        cursor: pointer;
+      }
+      .video-carousel_circle.current-video {
+        background: #707070;
+      }
+      .is-hidden {
+        display: none;
+      }
+      /*play button on each thumbnail, full-screen pop up video player*/
+      .play-vid {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        border: none;
+        background: none;
+        cursor: pointer;
+      }
+      .play-vid img {
+        width: 50pt;
+      }
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 15;
+        padding-top: 100px;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+      }
+      .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 70%;
+        height: 70%;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        position: absolute;
+      }
+      .popup-video {
+        width: 90%;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        position: absolute;
+      }
+      .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+      .close:hover,
+      .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      /* footer of the page with contact infomation*/
+      .footer {
+        width: 100%;
+        background-color: black;
+        padding: 20pt;
+      }
+      .column {
+        width: 20%;
+        display: inline-block;
+        margin-left: 40pt;
+        vertical-align: top;
+      }
+      .column img {
+        width: 200pt;
+        margin-top: 20pt;
+      }
+    </style>
+  </head>
+  <body>
+    <!--topbar navigation with links to other pages of the website (url changes when you click, would lead to actual pages if that was within the scope of this project), search and ticket purchase button-->
+    <header>
+      <nav>
+        <img src="images/whitelogo.png" alt="White Stedelijk logo" />
+        <a class="button tickets1" href="#Tickets">Tickets</a>
+        <input type="text" placeholder="Search..." />
+        <a href="#joinus">Join Us</a>
+        <a href="#newspress">News & Press</a>
+        <a href="#museum">Museum</a>
+        <a href="#research">Research</a>
+        <a href="#whatson">What's On</a>
+        <a href="#visit">Visit</a>
+        <a class="active" href="index.html">Home</a>
+      </nav>
+    </header>
+    <!--image gallery with 7 images, prev/next button, dot indicators, view collection button-->
+    <div class="carousel">
+      <button class="carousel_button carousel_button--left is-hidden">
+        <img src="images/leftarrowicon.svg" />
+      </button>
+      <div class="carousel_container">
+        <a class="button view-collection" href="#whatson">VIEW COLLECTION</a>
+        <ul class="carousel_track">
+          <li class="carousel_slide current-slide">
+            <img
+              class="carousel_image"
+              src="images/collection1.jpg"
+              alt="photo of exhibition"
+            />
+          </li>
+          <li class="carousel_slide">
+            <img
+              class="carousel_image"
+              src="images/collection2.jpg"
+              alt="photo of exhibition"
+            />
+          </li>
+          <li class="carousel_slide">
+            <img
+              class="carousel_image"
+              src="images/collection3.jpg"
+              alt="photo of exhibition"
+            />
+          </li>
+          <li class="carousel_slide">
+            <img
+              class="carousel_image"
+              src="images/collection5.jpg"
+              alt="photo of exhibition"
+            />
+          </li>
+          <li class="carousel_slide">
+            <img
+              class="carousel_image"
+              src="images/collection6.jpg"
+              alt="photo of exhibition"
+            />
+          </li>
+          <li class="carousel_slide">
+            <img
+              class="carousel_image"
+              src="images/collection7.jpg"
+              alt="photo of exhibition"
+            />
+          </li>
+          <li class="carousel_slide">
+            <img
+              class="carousel_image"
+              src="images/collection8.jpg"
+              alt="photo of exhibition"
+            />
+          </li>
+        </ul>
+      </div>
+      <button class="carousel_button carousel_button--right">
+        <img src="images/rightarrowicon.svg" alt="" />
+      </button>
+      <div class="carousel_nav">
+        <button class="carousel_circle current-slide"></button>
+        <button class="carousel_circle"></button>
+        <button class="carousel_circle"></button>
+        <button class="carousel_circle"></button>
+        <button class="carousel_circle"></button>
+        <button class="carousel_circle"></button>
+        <button class="carousel_circle"></button>
+      </div>
+    </div>
+    <!--black background section with the most relevant information at the moment-->
+    <section class="banner">
+      <img src="images/stedelijkathome.jpeg" alt="Visitors in the museum" />
+      <h1 class="white">STEDELIJK AT HOME</h1>
+      <p class="white">
+        During this period, we continue offering our online program. Take a look
+        at our Stedelijk at Home page. We have virtual tours, workshops,
+        mini-documentaries, and lots more for you to enjoy at home.
+      </p>
+      <a class="button button2" href="#Discover">Discover</a>
+      <p class="white">
+        You’re probably wondering what your visit to the museum will be like in
+        the near future. Will audio tours be available? Will you have to follow
+        a fixed route? To find answers to these and other questions, check out
+        our FAQ page.
+      </p>
+      <a class="button button2" href="#FAQ">FAQ</a>
+    </section>
+    <!--section with other relevant news/pages contained in responsive boxes with images on the right-->
+    <a href="#Tickets">
+      <div class="content-box">
+        <div class="box-text">
+          <h2>MUSEUM TEMPORARILY CLOSED</h2>
+          <p>
+            As the Stedelijk Museum is closed again, it's not possible to buy a
+            ticket until January 19, 2021. After this period, you can visit the
+            Stedelijk Museum by reserving a time slot on a specific date by
+            buying an online ticket beforehand. This also applies if you have a
+            Museumkaart, Member card or other discount card. For more info and
+            to make a reservation, please visit our <u>Ticket page</u>.
+            Unfortunately, it is not possible to make a reservation by phone. We
+            are looking forward to your visit!
+          </p>
+        </div>
+        <div class="box-image">
+          <img
+            src="images/museumtemporarilyclosed.jpg"
+            alt="photo of the museum"
+          />
+        </div>
+      </div>
+    </a>
+    <a href="#Ulay">
+      <div class="content-box">
+        <div class="box-text">
+          <h2>ULAY WAS HERE</h2>
+          <p>
+            Largest-ever retrospective and first international posthumous
+            exhibition of Ulay (1943-2020), one of the pioneers of Polaroid
+            photography and performance and body art: experimental,
+            uncompromising, and committed to social issues. The exhibition
+            includes many never before seen works.
+          </p>
+        </div>
+        <div class="box-image">
+          <img
+            src="images/ulaywashere.jpg"
+            alt="photo of a person with half-face in makeup and a cigarette"
+          />
+        </div>
+      </div>
+    </a>
+    <a href="#Surinamese-school">
+      <div class="content-box">
+        <div class="box-text">
+          <h2>SURINAMESE SCHOOL<br />PAINTING FROM PARAMARIBO TO AMSTERDAM</h2>
+          <p>
+            The exhibition Surinamese School is a celebration of Surinamese
+            painting in all its diversity and depth. Presenting over 100
+            artworks by 35 artists, Surinamese School explores the key themes
+            and narratives at the heart of Surinamese painting from 1910 to the
+            mid-1980s. Depictions of Surinamese history, spirituality and
+            everyday life, alongside forays into abstraction, and social change,
+            gave shape to artistic developments.
+          </p>
+        </div>
+        <div class="box-image">
+          <img
+            src="images/surinameseschool.jpg"
+            alt="colourful painting of three people"
+          />
+        </div>
+      </div>
+    </a>
+    <!--video carousel (5 videos) with left/right arrows, dot indicators, video thumbnails and play buttons-->
+    <div class="outer_video-container">
+      <div class="video-carousel">
+        <button
+          class="video-carousel_button video-carousel_button--left is-hidden"
+        >
+          <img src="images/leftarrowicon.svg" />
+        </button>
+        <div class="video-carousel_container">
+          <ul class="video-carousel_track">
+            <li class="carousel_video current-video">
+              <img
+                class="carousel_thumbnail"
+                src="images/VID1thumbnail.jpg"
+                alt="minidocs: de oase van matisse"
+              />
+              <button class="play-vid">
+                <img src="images/playicon.svg" alt="play" />
+              </button>
+            </li>
+            <li class="carousel_video">
+              <img
+                class="carousel_thumbnail"
+                src="images/VID2THUMBNAIL.jpg"
+                alt="minidocs: ed van der elsken, camera in love"
+              />
+              <button class="play-vid">
+                <img src="images/playicon.svg" alt="play" />
+              </button>
+            </li>
+            <li class="carousel_video">
+              <img
+                class="carousel_thumbnail"
+                src="images/VID3THUMBNAIL.jpg"
+                alt="minidocs: keith haring, canopy restoration"
+              />
+              <button class="play-vid">
+                <img src="images/playicon.svg" alt="play" />
+              </button>
+            </li>
+            <li class="carousel_video">
+              <img
+                class="carousel_thumbnail"
+                src="images/VID4THUMBNAIL.jpg"
+                alt="minidocs: studio drift, coded nature"
+              />
+              <button class="play-vid">
+                <img src="images/playicon.svg" alt="play" />
+              </button>
+            </li>
+            <li class="carousel_video">
+              <img
+                class="carousel_thumbnail"
+                src="images/VID5THUMBNAIL.jpg"
+                alt="minidocs: marcel wanders, pinned up"
+              />
+              <button class="play-vid">
+                <img src="images/playicon.svg" alt="play" />
+              </button>
+            </li>
+          </ul>
+        </div>
+        <button class="video-carousel_button video-carousel_button--right">
+          <img src="images/rightarrowicon.svg" alt="" />
+        </button>
+        <div class="video-carousel_nav">
+          <button class="video-carousel_circle current-video"></button>
+          <button class="video-carousel_circle"></button>
+          <button class="video-carousel_circle"></button>
+          <button class="video-carousel_circle"></button>
+          <button class="video-carousel_circle"></button>
+        </div>
+      </div>
+    </div>
+    <!--pop ups (modals) with videos and close buttons-->
+    <div id="modal1" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <video class="popup-video" controls>
+          <source src="/videos/VID1.mp4" type="video/mp4" />
+        </video>
+      </div>
+    </div>
+    <div id="modal2" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <video class="popup-video" controls>
+          <source src="/videos/VID2.mp4" type="video/mp4" />
+        </video>
+      </div>
+    </div>
+    <div id="modal3" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+
+        <video class="popup-video" controls>
+          <source src="/videos/VID3.mp4" type="video/mp4" />
+        </video>
+      </div>
+    </div>
+    <div id="modal4" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <video class="popup-video" controls>
+          <source src="/videos/VID4.mp4" type="video/mp4" />
+        </video>
+      </div>
+    </div>
+    <div id="modal5" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <video class="popup-video" controls>
+          <source src="/videos/VID5.mp4" type="video/mp4" />
+        </video>
+      </div>
+    </div>
+    <!--footer with logo, contact information, visiting address, opening hours, etc. -->
+    <footer>
+      <div class="footer">
+        <div class="column">
+          <img src="/images/whitelogo.png" alt="white stedelijk logo (S)" />
+        </div>
+        <div class="column">
+          <h2 class="white">NEWSLETTER</h2>
+          <p class="white">Want to keep up to date with Stedelijk?</p>
+          <a class="button" href="#Newsletter">Sign Up</a>
+        </div>
+        <div class="column">
+          <h2 class="white">CONTACT</h2>
+          <p class="white">
+            +31 (0)20 5732 911<br />
+            +31 (0)20 6752 716<br />
+            You can reach us: Monday till Friday: 9 am - 5 pm<br /><br />
+            info@stedelijk.nl<br />
+            lostandfound@stedelijk.nl
+          </p>
+        </div>
+        <div class="column">
+          <h2 class="white">VISITING ADDRESS</h2>
+          <p class="white">
+            Museumplein 10<br />
+            1071 DJ Amsterdam
+          </p>
+        </div>
+      </div>
+    </footer>
+    <script>
+      //all javaScript is in this tag
+      //image gallery with prev/next buttons and dot indicators of slides
+      //defining all variables that will be used
+      var track = document.querySelector(".carousel_track");
+      var slides = Array.from(track.children);
+      var nextButton = document.querySelector(".carousel_button--right");
+      var prevButton = document.querySelector(".carousel_button--left");
+      var dotsNav = document.querySelector(".carousel_nav");
+      var dots = Array.from(dotsNav.children);
+      //getting width of the slide (it changes with the size of the window)
+      const slideWidth = slides[0].getBoundingClientRect().width;
+      //putting slides in a row instead of stacked
+      const setSlidePosition = (slide, index) => {
+        slide.style.left = slideWidth * index + "px";
+      };
+      slides.forEach(setSlidePosition);
+      //function that moves slides
+      const moveToSlide = (track, currentSlide, targetSlide) => {
+        track.style.transform = "translateX(-" + targetSlide.style.left + ")";
+        currentSlide.classList.remove("current-slide");
+        targetSlide.classList.add("current-slide");
+      };
+      //function that changes dots
+      const updateDots = (currentDot, targetDot) => {
+        currentDot.classList.remove("current-slide");
+        targetDot.classList.add("current-slide");
+      };
+      //hiding buttons when gets to one side of the carousel
+      const hideShowButtons = (slides, prevButton, nextButton, targetIndex) => {
+        if (targetIndex === 0) {
+          prevButton.classList.add("is-hidden");
+          nextButton.classList.remove("is-hidden");
+        } else if (targetIndex === slides.length - 1) {
+          prevButton.classList.remove("is-hidden");
+          nextButton.classList.add("is-hidden");
+        } else {
+          prevButton.classList.remove("is-hidden");
+          nextButton.classList.remove("is-hidden");
+        }
+      };
+      //when prev button is clicked previous image is shown
+      prevButton.addEventListener("click", (e) => {
+        const currentSlide = track.querySelector(".current-slide");
+        const prevSlide = currentSlide.previousElementSibling;
+        const currentDot = dotsNav.querySelector(".current-slide");
+        const prevDot = currentDot.previousElementSibling;
+        const prevIndex = slides.findIndex((slide) => slide === prevSlide);
+        moveToSlide(track, currentSlide, prevSlide);
+        updateDots(currentDot, prevDot);
+        hideShowButtons(slides, prevButton, nextButton, prevIndex);
+      });
+      //clicking the right button shows the next photo
+      nextButton.addEventListener("click", (e) => {
+        const currentSlide = track.querySelector(".current-slide");
+        const nextSlide = currentSlide.nextElementSibling;
+        const currentDot = dotsNav.querySelector(".current-slide");
+        const nextDot = currentDot.nextElementSibling;
+        const nextIndex = slides.findIndex((slide) => slide === nextSlide);
+        moveToSlide(track, currentSlide, nextSlide);
+        updateDots(currentDot, nextDot);
+        hideShowButtons(slides, prevButton, nextButton, nextIndex);
+      });
+      //navigation circles that indicate which slide is shown right now
+      dotsNav.addEventListener("click", (e) => {
+        //check which dot was clicked
+        const targetDot = e.target.closest("button");
+        //if user clicks empty space around navigation dots the function stops here
+        if (!targetDot) return;
+        //if a dot is clicked then the slide that corresponds with the index of the dot that is clicked is shown
+        const currentSlide = track.querySelector(".current-slide");
+        const currentDot = dotsNav.querySelector(".current-slide");
+        const targetIndex = dots.findIndex((dot) => dot === targetDot);
+        const targetSlide = slides[targetIndex];
+        moveToSlide(track, currentSlide, targetSlide);
+        updateDots(currentDot, targetDot);
+        hideShowButtons(slides, prevButton, nextButton, targetIndex);
+      });
+      //video gallery with all videos in a row, clicking on left/right video brings in to the center, clicking play opens it up and plays it
+      //defining all variables that will be used
+      var trackV = document.querySelector(".video-carousel_track");
+      var slidesV = Array.from(trackV.children);
+      var nextButtonV = document.querySelector(".video-carousel_button--right");
+      var prevButtonV = document.querySelector(".video-carousel_button--left");
+      var dotsNavV = document.querySelector(".video-carousel_nav");
+      var dotsV = Array.from(dotsNavV.children);
+      //getting width of the slide (it changes with the size of the window)
+      const slideWidthV = slidesV[0].getBoundingClientRect().width;
+      //putting slides in a row instead of stacked
+      const setSlidePositionV = (slideV, indexV) => {
+        slideV.style.left = slideWidth * indexV + "px";
+      };
+      slidesV.forEach(setSlidePositionV);
+      //function that moves slides
+      const moveToSlideV = (trackV, currentSlideV, targetSlideV) => {
+        trackV.style.transform = "translateX(-" + targetSlideV.style.left + ")";
+        currentSlideV.classList.remove("current-video");
+        targetSlideV.classList.add("current-video");
+      };
+      //function that changes dots
+      const updateDotsV = (currentDotV, targetDotV) => {
+        currentDotV.classList.remove("current-video");
+        targetDotV.classList.add("current-video");
+      };
+      //hiding buttons when gets to one side of the carousel
+      const hideShowButtonsV = (
+        slidesV,
+        prevButtonV,
+        nextButtonV,
+        targetIndexV
+      ) => {
+        if (targetIndexV === 0) {
+          prevButtonV.classList.add("is-hidden");
+          nextButtonV.classList.remove("is-hidden");
+        } else if (targetIndexV === slidesV.length - 1) {
+          prevButtonV.classList.remove("is-hidden");
+          nextButtonV.classList.add("is-hidden");
+        } else {
+          prevButtonV.classList.remove("is-hidden");
+          nextButtonV.classList.remove("is-hidden");
+        }
+      };
+      //when prev button is clicked previous image is shown
+      prevButtonV.addEventListener("click", (e) => {
+        const currentSlideV = trackV.querySelector(".current-video");
+        const prevSlideV = currentSlideV.previousElementSibling;
+        const currentDotV = dotsNavV.querySelector(".current-video");
+        const prevDotV = currentDotV.previousElementSibling;
+        const prevIndexV = slidesV.findIndex((slideV) => slideV === prevSlideV);
+        moveToSlideV(trackV, currentSlideV, prevSlideV);
+        updateDotsV(currentDotV, prevDotV);
+        hideShowButtonsV(slidesV, prevButtonV, nextButtonV, prevIndexV);
+      });
+      //clicking the right button shows the next photo
+      nextButtonV.addEventListener("click", (e) => {
+        const currentSlideV = trackV.querySelector(".current-video");
+        const nextSlideV = currentSlideV.nextElementSibling;
+        const currentDotV = dotsNavV.querySelector(".current-video");
+        const nextDotV = currentDotV.nextElementSibling;
+        const nextIndexV = slidesV.findIndex((slideV) => slideV === nextSlideV);
+        moveToSlideV(trackV, currentSlideV, nextSlideV);
+        updateDotsV(currentDotV, nextDotV);
+        hideShowButtonsV(slidesV, prevButtonV, nextButtonV, nextIndexV);
+      });
+      //navigation circles that indicate which slide is shown right now
+      dotsNavV.addEventListener("click", (e) => {
+        //check which dot was clicked
+        const targetDotV = e.target.closest("button");
+        //if user clicks empty space around navigation dots the function stops here
+        if (!targetDotV) return;
+        //if a dot is clicked then the slide that corresponds with the index of the dot that is clicked is shown
+        const currentSlideV = trackV.querySelector(".current-video");
+        const currentDotV = dotsNavV.querySelector(".current-video");
+        const targetIndexV = dotsV.findIndex((dotV) => dotV === targetDotV);
+        const targetSlideV = slidesV[targetIndexV];
+        moveToSlideV(trackV, currentSlideV, targetSlideV);
+        updateDotsV(currentDotV, targetDotV);
+        hideShowButtonsV(slidesV, prevButtonV, nextButtonV, targetIndexV);
+      });
+      //pop-up window with a video and a close button
+      // defining all variables
+      var modal = document.getElementsByClassName("modal");
+      var btn = document.getElementsByClassName("play-vid");
+      var span = document.getElementsByClassName("close");
+      // when the play button is clicked on one of the thumbnails in the carousel, the corresponding modal opens up with a video
+      btn[0].onclick = function () {
+        modal[0].style.display = "block";
+      };
+      btn[1].onclick = function () {
+        modal[1].style.display = "block";
+      };
+      btn[2].onclick = function () {
+        modal[2].style.display = "block";
+      };
+      btn[3].onclick = function () {
+        modal[3].style.display = "block";
+      };
+      btn[4].onclick = function () {
+        modal[4].style.display = "block";
+      };
+      // when the x button is clicked the modal is closed
+      span[0].onclick = function () {
+        modal[0].style.display = "none";
+      };
+      span[1].onclick = function () {
+        modal[1].style.display = "none";
+      };
+      span[2].onclick = function () {
+        modal[2].style.display = "none";
+      };
+      span[3].onclick = function () {
+        modal[3].style.display = "none";
+      };
+      span[4].onclick = function () {
+        modal[4].style.display = "none";
+      };
+    </script>
+  </body>
+</html>
